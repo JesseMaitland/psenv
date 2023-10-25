@@ -1,15 +1,13 @@
-from psenv.cli import parse_args
+from ramjam.utils import parse_args
+from psenv import cli
 
 
-def main():
-    cmd = parse_args()
-
-    if type(cmd.func) is list:
-        for func in cmd.func:
-            func(cmd)
-    else:
-        cmd.func(cmd)
+def main() -> int:
+    cli_args = parse_args(cli, ignore=["basepsenvcommand"])
+    command = cli_args.command(cli_args=cli_args)
+    return command()
 
 
 if __name__ == "__main__":
-    main()
+    exit_code = main()
+    exit(exit_code)
