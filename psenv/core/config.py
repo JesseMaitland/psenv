@@ -12,11 +12,15 @@ class ConfigReader:
         def read(self) -> Dict[str, Any]:
             return file_handler.read_yml_file(self.path)
 
+
+class AWSAccountsConfigReader(ConfigReader):
+
         def get_aws_accounts(self) -> AWSAccounts:
             config = self.read()
             if config:
                 return AWSAccounts(**config)
             return AWSAccounts(aws_accounts={})
+
 
 class ConfigWriter:
 

@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Optional
 from psenv.bases import PathCreator, Paths
 from psenv.environment.config import PSENV_HOME
-from psenv.core.config import ConfigWriter, ConfigReader
+from psenv.core.config import ConfigWriter, AWSAccountsConfigReader
 
 
 class Project:
@@ -12,6 +12,10 @@ class Project:
 
     def get_project_creator(self) -> PathCreator:
         return ProjectCreator(self)
+
+    def get_aws_accounts_config_reader(self) -> AWSAccountsConfigReader:
+        return AWSAccountsConfigReader(self.paths.accounts_file)
+
 
 
 class ProjectPaths(Paths):

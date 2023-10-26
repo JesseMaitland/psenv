@@ -3,6 +3,7 @@ from psenv.bases import BasePsenvCommand
 from psenv.core import messages
 from psenv.core.error_handler import handle_cli_errors
 from psenv.core.config import ConfigWriter, ConfigReader
+from psenv.core.state_machines.account_manager import AccountManager, AccountManagerContext
 
 __version__ = "0.17.1"
 
@@ -12,6 +13,7 @@ class Version(Command):
     def __call__(self) -> int:
         print(f"psenv :: version {__version__}")
         return 0
+
 
 class Init(BasePsenvCommand):
 
@@ -26,35 +28,43 @@ class Init(BasePsenvCommand):
         return 0
 
 
-class New(BasePsenvCommand):
-
+class Account(BasePsenvCommand):
     args = {
-        ("--account", "-a"): {
-            "help": "AWS account name and alias",
+
+        ("--new", "-n"): {
+            "help": "Create a new account",
             "required": False,
+            "default": False,
             "nargs": 2,
+        },
+
+        ("--update", "-u"): {
+            "help": "Update an existing account",
+            "required": False,
+            "default": False,
+            "nargs": 2,
+        },
+
+        ("--delete", "-d"): {
+            "help": "Delete an account",
+            "required": False,
+            "default": False,
+        },
+
+        ("--list", "-l"): {
+            "help": "List all accounts",
+            "required": False,
+            "default": False,
+            "action": "store_true",
         }
     }
 
     @handle_cli_errors
     def __call__(self) -> int:
-
-        if self.cli_args.account:
-            return self.new_account(*self.cli_args.account)
-
-
-    def new_account(self, account_name: str, account_id: str) -> int:
-        config_reader = ConfigReader(self.project.paths.accounts_file)
-        aws_accounts = config_reader.get_aws_accounts()
-
-        if account_name in aws_accounts.aws_accounts:
-            print(f"account {account_name} already exists")
-            return 1
-
-        aws_accounts.append_account(account_name, account_id)
-
-        config_writer = ConfigWriter(self.project.paths.accounts_file)
-        config_writer.write(aws_accounts.model_dump())
-
-        print(f"new account: {account_name} {account_id}")
-        return 0
+        ctx = AccountManagerContext(
+            flags=self.cli_args,
+            project=self.project
+        )
+        account_manager = AccountManager(ctx)
+        account_manager.run()
+        return ctx.exit_code
