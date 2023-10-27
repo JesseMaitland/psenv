@@ -1,6 +1,7 @@
 import functools
 from typing import Optional
 from psenv.environment.variables import PSENV_DEBUG
+from psenv.core.exceptions import CliArgumentError
 
 
 class ErrorHandler:
@@ -35,4 +36,8 @@ def handle_cli_errors(func):
 
         except OSError as e:
             return args[0].error_handler.handle(e, f"psenv :: Unable to perform action :: Unknown error")
+
+        except CliArgumentError as e:
+            return args[0].error_handler.handle(e, f"psenv :: ERROR :: Invalid Argument Combination :: {e}")
+
     return wrapper

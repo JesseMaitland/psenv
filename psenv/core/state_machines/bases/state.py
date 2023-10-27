@@ -8,6 +8,15 @@ class State(ABC):
 
     def __init__(self, ctx: Context) -> None:
         self.ctx = ctx
+        self._success = False
+
+    @property
+    def success(self) -> bool:
+        return self._success
+
+    @success.setter
+    def success(self, value: bool) -> None:
+        self._success = value
 
     @abstractmethod
     def execute(self) -> None:

@@ -19,3 +19,6 @@ class AWSAccounts(BaseModel):
 
     def append_account(self, account_name: str, account_id: str) -> None:
         self.aws_accounts[account_name] = AWSAccount(id=account_id)
+
+    def sort(self) -> None:
+        self.aws_accounts = dict(sorted(self.aws_accounts.items()))

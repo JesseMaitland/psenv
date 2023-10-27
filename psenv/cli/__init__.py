@@ -34,27 +34,27 @@ class Account(BasePsenvCommand):
         ("--new", "-n"): {
             "help": "Create a new account",
             "required": False,
-            "default": False,
+            "default": None,
             "nargs": 2,
         },
 
         ("--update", "-u"): {
             "help": "Update an existing account",
             "required": False,
-            "default": False,
+            "default": None,
             "nargs": 2,
         },
 
         ("--delete", "-d"): {
             "help": "Delete an account",
             "required": False,
-            "default": False,
+            "default": None,
         },
 
         ("--list", "-l"): {
             "help": "List all accounts",
             "required": False,
-            "default": False,
+            "default": None,
             "action": "store_true",
         }
     }
