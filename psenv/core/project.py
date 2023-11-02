@@ -2,7 +2,8 @@ from pathlib import Path
 from typing import Optional
 from psenv.bases import PathCreator, Paths
 from psenv.environment.config import PSENV_HOME
-from psenv.core.config import ConfigWriter, AWSAccountsConfigReader
+from psenv.core.config import AWSAccountsConfigReader, EnvironmentsConfigReader
+from psenv.core.account_validator import AccountValidator
 
 
 class Project:
@@ -16,7 +17,16 @@ class Project:
     def get_aws_accounts_config_reader(self) -> AWSAccountsConfigReader:
         return AWSAccountsConfigReader(self.paths.accounts_file)
 
+    def get_environments_config_reader(self) -> EnvironmentsConfigReader:
+        return EnvironmentsConfigReader(self.paths.environments_file)
 
+    def get_account_validator(self, account_name: str) -> AccountValidator:
+        config_reader = self.get_aws_accounts_config_reader()
+        accounts = config_reader.get_aws_accounts()
+
+        return AccountValidator(
+            account=accounts.get_account(account_name)
+        )
 
 class ProjectPaths(Paths):
 
@@ -36,6 +46,10 @@ class ProjectPaths(Paths):
         return self.root / 'accounts.yml'
 
     @property
+    def environments_file(self):
+        return self.root / 'environments.yml'
+
+    @property
     def directories(self):
         return [
             self.root,
@@ -46,6 +60,7 @@ class ProjectPaths(Paths):
         return [
             self.paths_file,
             self.accounts_file,
+            self.environments_file
         ]
 
 

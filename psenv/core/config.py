@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Any, Dict
-from psenv.core.models import AWSAccount, AWSAccounts
+from psenv.core.models import AWSAccounts, Environments
 from psenv.core import file_handler
 
 
@@ -20,6 +20,15 @@ class AWSAccountsConfigReader(ConfigReader):
             if config:
                 return AWSAccounts(**config)
             return AWSAccounts(aws_accounts={})
+
+
+class EnvironmentsConfigReader(ConfigReader):
+
+    def get_environments(self) -> Environments:
+        config = self.read()
+        if config:
+            return Environments(**config)
+        return Environments(environments={})
 
 
 class ConfigWriter:

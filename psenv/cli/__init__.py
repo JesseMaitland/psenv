@@ -68,3 +68,40 @@ class Account(BasePsenvCommand):
         account_manager = AccountManager(ctx)
         account_manager.run()
         return ctx.exit_code
+
+
+class Environment(BasePsenvCommand):
+    args = {
+
+        ("--new", "-n"): {
+            "help": "Create a new account",
+            "required": False,
+            "default": None,
+            "nargs": 2,
+        },
+
+        ("--update", "-u"): {
+            "help": "Update an existing account",
+            "required": False,
+            "default": None,
+            "nargs": 2,
+        },
+
+        ("--delete", "-d"): {
+            "help": "Delete an account",
+            "required": False,
+            "default": None,
+        },
+
+        ("--list", "-l"): {
+            "help": "List all accounts",
+            "required": False,
+            "default": None,
+            "action": "store_true",
+        }
+    }
+
+    @handle_cli_errors
+    def __call__(self) -> int:
+        print("environment")
+        return 0

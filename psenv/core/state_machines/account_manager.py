@@ -138,7 +138,9 @@ class UpdateAccount(State):
             print(f"Entry not found for account {account_name}. Use the --new flag to add this account to your config.")
 
     def transition(self) -> StateType:
-        return SaveAccountFile(self.ctx)
+        if self.success:
+            return SaveAccountFile(self.ctx)
+        return ExitState(self.ctx)
 
 
 class NewAccount(State):

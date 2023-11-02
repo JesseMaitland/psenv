@@ -1,7 +1,7 @@
 import functools
 from typing import Optional
 from psenv.environment.variables import PSENV_DEBUG
-from psenv.core.exceptions import CliArgumentError
+from psenv.core.exceptions import CliArgumentError, AccountValidationError
 
 
 class ErrorHandler:
@@ -39,5 +39,8 @@ def handle_cli_errors(func):
 
         except CliArgumentError as e:
             return args[0].error_handler.handle(e, f"psenv :: ERROR :: Invalid Argument Combination :: {e}")
+
+        except AccountValidationError as e:
+            return args[0].error_handler.handle(e, f"psenv :: ERROR :: Invalid Account :: {e}")
 
     return wrapper
