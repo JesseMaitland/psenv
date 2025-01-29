@@ -1,0 +1,10 @@
+import os
+
+
+# used to turn on debug logging on and off
+PSENV_DEBUG = os.getenv("PSENV_DEBUG", "false").lower() == "true"
+PSENV_LOG_LEVEL = os.getenv("PSENV_LOG_LEVEL", "INFO")
+PSENV_ENABLE_FILE_LOGGING = os.getenv("PSENV_ENABLE_FILE_LOGGING", "false").lower() == "true"
+PSENV_LOG_MSG_FORMAT = "%(levelname)s :: %(asctime)s :: %(name)s :: %(message)s"
+PSENV_STREAM_FORMAT = "%(message)s"
+PSENV_LOG_DATE_FORMAT = "%Y-%m-%d %I:%M:%S %p"

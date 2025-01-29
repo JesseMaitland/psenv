@@ -1,6 +1,7 @@
 import os
 from unittest.mock import patch
-from psenv.core.env_file import EnvFile
+
+from src.psenv import EnvFile
 
 DUMMY_ENVIRON = {"FOO_VAR1": "spam", "FOO_VAR2": "beans", "FOO_VAR3": "eggs"}
 

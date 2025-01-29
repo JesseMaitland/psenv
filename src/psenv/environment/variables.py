@@ -1,6 +1,8 @@
 import os
+
 from dotenv import load_dotenv
-from psenv.environment.config import PSENV_ENV_FILE
+
+from src.psenv.environment.config import PSENV_ENV_FILE
 
 load_dotenv(dotenv_path=PSENV_ENV_FILE)
 

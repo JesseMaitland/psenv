@@ -1,11 +1,10 @@
-import pytest
 from unittest.mock import MagicMock, patch
-from psenv.core.parameter_store import ParameterStore
 
+import pytest
 
-DUMMY_FETCH_RESPONSE = {
-    "Parameters": [{"Name": "CAPITAN_AMERICA", "Value": "shield"}, {"Name": "the_hulk", "Value": "smash!"}]
-}
+from src.psenv import ParameterStore
+
+DUMMY_FETCH_RESPONSE = {"Parameters": [{"Name": "CAPITAN_AMERICA", "Value": "shield"}, {"Name": "the_hulk", "Value": "smash!"}]}
 
 DUMMY_PUSH_RESPONSE = {"Version": "1984"}
 
