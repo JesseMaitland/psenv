@@ -1,4 +1,4 @@
-DISALLOWED_CHARS = '!"#$%&\'()*+,:;<=>?@[\\]^`{|}~'
+DISALLOWED_CHARS = "!\"#$%&'()*+,:;<=>?@[\\]^`{|}~"
 
 
 def string_is_valid(string: str, disallowed_chars: str = DISALLOWED_CHARS) -> None | str:

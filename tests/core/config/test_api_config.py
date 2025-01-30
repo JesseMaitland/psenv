@@ -1,34 +1,9 @@
 from typing import Dict
-
+from unittest.mock import patch
 import pytest
-from psenv.core.config.api_config import ApiConfig
+from psenv.core.config.api_config import ApiConfig, ApiConfigLoader
 from psenv.core.error_handling.exceptions import PsenvConfigException
 
-@pytest.fixture
-def valid_config_data() -> Dict[str, str]:
-    return {
-        "project": "test_project",
-        "prefix": "test_prefix",
-        "default": "test_default",
-        "environments": ["dev", "prod"]
-    }
-
-@pytest.fixture
-def invalid_config_data() -> Dict[str, str]:
-    return {
-        "project": "test_project",
-        "prefix": "test_prefix",
-        "default": "test_default",
-    }
-
-@pytest.fixture
-def invalid_character_config_data() -> Dict[str, str]:
-    return {
-        "project": "test_project",
-        "prefix": "test_prefix",
-        "default": "test_default",
-        "environments": ["dev", "prod!"]
-    }
 
 def test_api_config_initialization(valid_config_data):
     config = ApiConfig(**valid_config_data)
@@ -54,3 +29,16 @@ def test_api_config_invalid_character(invalid_character_config_data):
     with pytest.raises(PsenvConfigException) as excinfo:
         config.validate()
     assert "Invalid value for key: environments value: ['dev', 'prod!'] character ! is not allowed" in str(excinfo.value)
+
+
+def test_api_config_loader(good_api_config_path):
+    loader = ApiConfigLoader(good_api_config_path)
+    config = loader.load()
+    assert isinstance(config, ApiConfig)
+
+
+def test_validation_called_on_load(good_api_config_path):
+    with patch.object(ApiConfig, "validate") as mock_validate:
+        loader = ApiConfigLoader(good_api_config_path)
+        loader.load()
+        mock_validate.assert_called_once()

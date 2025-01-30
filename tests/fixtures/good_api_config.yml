@@ -1,0 +1,9 @@
+psenv:
+  project: foobar
+  prefix: spam/eggs/beans
+  default: dev
+  environments:
+    - dev
+    - test
+    - prod
+

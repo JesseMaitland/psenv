@@ -1,3 +1,2 @@
-
 class PsenvConfigException(Exception):
     pass

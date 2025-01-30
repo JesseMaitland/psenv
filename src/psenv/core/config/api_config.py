@@ -13,8 +13,8 @@ CONFIG_KEYS = (
     "environments",
 )
 
-class ApiConfig:
 
+class ApiConfig:
     def __init__(self, **kwargs) -> None:
         for key in CONFIG_KEYS:
             if key not in kwargs:
@@ -51,8 +51,8 @@ class ApiConfig:
                     if char := string_is_valid(item):
                         raise PsenvConfigException(f"Invalid value for key: {key} value: {value} character {char} is not allowed")
 
-class ApiConfigLoader:
 
+class ApiConfigLoader:
     def __init__(self, config_file: Optional[Path] = None) -> None:
         self._config_file = config_file or PSENV_API_CONFIG_FILE
 
@@ -71,5 +71,6 @@ class ApiConfigLoader:
             except FileNotFoundError:
                 raise PsenvConfigException(f"Config file not found: {self.config_file}")
             else:
+                config = ApiConfig(**config)
                 config.validate()
-                return ApiConfig(**config)
+                return config
