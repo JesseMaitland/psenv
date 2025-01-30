@@ -1,5 +1,7 @@
 import os
 
+# used to load the api config file
+PSENV_API_CONFIG_FILE = os.getenv("PSENV_API_CONFIG_FILE", "psenv.yml")
 
 # used to turn on debug logging on and off
 PSENV_DEBUG = os.getenv("PSENV_DEBUG", "false").lower() == "true"
