@@ -1,6 +1,6 @@
 psenv:
-  project: foobar
-  prefix: spam/eggs/beans
+  project: myproject
+  prefix: services/foo/bar
   default: dev
   environments:
     - dev

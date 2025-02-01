@@ -60,3 +60,9 @@ class ParameterStoreService:
         for response in paginator.paginate(**self.fetch_kwargs):
             for parameter in response["Parameters"]:
                 yield Parameter.from_boto3_response(parameter)
+
+    def parameters_as_dict(self) -> Dict[str, str]:
+        params = {}
+        for parameter in self.parameters():
+            params.update(parameter.as_dict())
+        return params

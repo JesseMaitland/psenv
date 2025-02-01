@@ -1,10 +1,10 @@
 import functools
-
+from psenv.utilities.logging_utils import get_logger
 from psenv.core.error_handling import exceptions
-from pytoolbelt.environment.config import (
-    PYTOOLBELT_DEBUG,
-    PYTOOLBELT_ENABLE_FILE_LOGGING,
-    get_logger,
+from psenv.environment.config import (
+    PSENV_DEBUG,
+    PSENV_ENABLE_FILE_LOGGING,
+    PSENV_DEBUG
 )
 
 logger = get_logger(__name__)
@@ -12,7 +12,7 @@ logger = get_logger(__name__)
 
 class ErrorHandler:
     def __init__(self) -> None:
-        self.debug = PYTOOLBELT_DEBUG
+        self.debug = PSENV_DEBUG
 
     def handle(self, exception: Exception) -> int:
         self.log_error(exception)
@@ -20,7 +20,7 @@ class ErrorHandler:
 
     @staticmethod
     def log_error(exception: Exception) -> None:
-        if PYTOOLBELT_ENABLE_FILE_LOGGING:
+        if PSENV_ENABLE_FILE_LOGGING:
             error_logger = get_logger("error_logger", terminal_stream=False)
             error_logger.exception(exception)
         logger.info(exception.args[0])
@@ -48,6 +48,9 @@ def handle_cli_errors(func):
             return error_handler.handle(e)
 
         except OSError as e:
+            return error_handler.handle(e)
+
+        except exceptions.PsenvConfigException as e:
             return error_handler.handle(e)
 
     return wrapper
