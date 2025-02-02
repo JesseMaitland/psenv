@@ -1,9 +1,9 @@
 import datetime
 import os
-
+from pathlib import Path
 
 # used to load the api config file
-PSENV_API_CONFIG_FILE = os.getenv("PSENV_API_CONFIG_FILE", "psenv.yml")
+PSENV_API_CONFIG_FILE = Path(os.getenv("PSENV_API_CONFIG_FILE", "psenv.yml"))
 
 PSENV_NOW = str(datetime.datetime.now())
 

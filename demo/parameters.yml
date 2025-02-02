@@ -1,0 +1,16 @@
+psenv:
+  project: myproject
+  prefix: foo/bar
+  environments:
+    common:
+      - FOOBAR_ENV: some-value-here
+      - FOOBAR_ENV2: some-other-value-here
+    dev:
+      - DEV_FOOBAR_ENV: dev-value
+      - DEV_BARBAZ_ENV: dev-value2
+    test:
+      - TEST_FOOBAR_ENV: test-value
+      - TEST_BARBAZ_ENV: test-value2
+    prod:
+      - PROD_FOOBAR_ENV: prod-value
+      - PROD_BARBAZ_ENV: prod-value2
