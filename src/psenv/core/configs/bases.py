@@ -1,7 +1,7 @@
 import os
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import List, Any, Dict, Type
+from typing import Any, Dict, Type
 
 import yaml
 from typing_extensions import TypeVar
@@ -62,7 +62,7 @@ class __BaseConfig(ABC):
         if self.environment not in self.environments:
             raise PsenvConfigException(f"Invalid environment: {self.environment} not in {self.environments}")
 
-TypePsenvConfig = TypeVar("TypePsenvConfig", bound=_BaseConfig)
+TypePsenvConfig = TypeVar("TypePsenvConfig", bound=__BaseConfig)
 
 
 class __BaseConfigLoader(ABC):
