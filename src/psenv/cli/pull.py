@@ -3,7 +3,7 @@ from pathlib import Path
 from ramjam.cli import Command
 
 from psenv.core.aws.parameter_store_service import ParameterStoreService
-from psenv.core.config import ApiConfig, ApiConfigLoader
+from psenv.core.configs import ApiConfig, ApiConfigLoader
 from psenv.core.error_handling.error_handler import handle_cli_errors
 
 class Pull(Command):

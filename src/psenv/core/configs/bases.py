@@ -1,28 +1,30 @@
-from typing import List, Optional, Dict, Any
 import os
-import yaml
+from abc import ABC, abstractmethod
 from pathlib import Path
+from typing import List, Any, Dict, Type
+
+import yaml
+from typing_extensions import TypeVar
+
 from psenv.core.error_handling.exceptions import PsenvConfigException
-from psenv.environment.config import PSENV_API_CONFIG_FILE
 from psenv.utilities.string_utils import string_is_valid
 
 CONFIG_KEYS = (
     "project",
     "prefix",
-    "default",
     "environments",
     "environments"
 )
 
 
-class ApiConfig:
+class __BaseConfig(ABC):
+
     def __init__(self, **kwargs) -> None:
         for key in CONFIG_KEYS:
             if key not in kwargs:
                 raise PsenvConfigException(f"Missing required key: {key}")
         self._project = kwargs.get("project")
         self._prefix = kwargs.get("prefix")
-        self._default = kwargs.get("default")
         self._environments = kwargs.get("environments")
         self._environment = kwargs.get("environment")
 
@@ -34,13 +36,10 @@ class ApiConfig:
     def prefix(self) -> str:
         return self._prefix
 
+    @abstractmethod
     @property
-    def default(self) -> str:
-        return self._default
-
-    @property
-    def environments(self) -> List[str]:
-        return self._environments
+    def environments(self) -> Any:
+        pass
 
     @property
     def environment(self) -> str:
@@ -63,10 +62,15 @@ class ApiConfig:
         if self.environment not in self.environments:
             raise PsenvConfigException(f"Invalid environment: {self.environment} not in {self.environments}")
 
-class ApiConfigLoader:
-    def __init__(self, environment: str, config_file: Optional[Path] = None) -> None:
+TypePsenvConfig = TypeVar("TypePsenvConfig", bound=_BaseConfig)
+
+
+class __BaseConfigLoader(ABC):
+
+    def __init__(self, environment: str, config_file: Path, config_type: Type[TypePsenvConfig]) -> None:
         self._environment = environment
-        self._config_file = config_file or PSENV_API_CONFIG_FILE
+        self._config_file = config_file
+        self._config_type = config_type
 
     @property
     def environment(self) -> str:
@@ -90,8 +94,9 @@ class ApiConfigLoader:
             else:
                 return config
 
-    def load(self) -> ApiConfig:
+    def load(self) -> TypePsenvConfig:
         config_dict = self.read_config()
-        config = ApiConfig(**config_dict, environment=self.environment)
+        config = self._config_type(**config_dict, environment=self.environment)
         config.validate()
         return config
+

@@ -1,7 +1,7 @@
 from typing import Dict
 from unittest.mock import patch
 import pytest
-from psenv.core.config.api_config import ApiConfig, ApiConfigLoader
+from psenv.core.configs.api_config import ApiConfig, ApiConfigLoader
 from psenv.core.error_handling.exceptions import PsenvConfigException
 
 
