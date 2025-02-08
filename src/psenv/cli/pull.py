@@ -15,6 +15,7 @@ class Pull(Command):
             "required": True,
             "type": str
         },
+
         ("--decrypt", "-d"): {
             "help": "Decrypt the parameters",
             "action": "store_true",

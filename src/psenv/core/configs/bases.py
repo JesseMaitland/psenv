@@ -17,7 +17,7 @@ CONFIG_KEYS = (
 )
 
 
-class __BaseConfig(ABC):
+class _BaseConfig(ABC):
 
     def __init__(self, **kwargs) -> None:
         for key in CONFIG_KEYS:
@@ -62,12 +62,12 @@ class __BaseConfig(ABC):
         if self.environment not in self.environments:
             raise PsenvConfigException(f"Invalid environment: {self.environment} not in {self.environments}")
 
-TypePsenvConfig = TypeVar("TypePsenvConfig", bound=__BaseConfig)
+PsenvConfig = TypeVar("PsenvConfig", bound=_BaseConfig)
 
 
-class __BaseConfigLoader(ABC):
+class _BaseConfigLoader(ABC):
 
-    def __init__(self, environment: str, config_file: Path, config_type: Type[TypePsenvConfig]) -> None:
+    def __init__(self, environment: str, config_file: Path, config_type: Type[PsenvConfig]) -> None:
         self._environment = environment
         self._config_file = config_file
         self._config_type = config_type
@@ -94,7 +94,7 @@ class __BaseConfigLoader(ABC):
             else:
                 return config
 
-    def load(self) -> TypePsenvConfig:
+    def load(self) -> PsenvConfig:
         config_dict = self.read_config()
         config = self._config_type(**config_dict, environment=self.environment)
         config.validate()

@@ -1,38 +1,39 @@
-from typing import List, Any, Dict
+from pathlib import Path
+from typing import List, Any, Dict, Optional
 from psenv.environment.config import PSENV_API_CONFIG_FILE, PSENV_PARAMETERS_CONFIG_FILE
-from psenv.core.configs.bases import __BaseConfig, __BaseConfigLoader
+from psenv.core.configs.bases import _BaseConfig, _BaseConfigLoader
 
 
-class ApiConfig(__BaseConfig):
+class ApiConfig(_BaseConfig):
 
     @property
     def environments(self) -> List[str]:
         return self._environments
 
 
-class ApiConfigLoader(__BaseConfigLoader):
+class ApiConfigLoader(_BaseConfigLoader):
 
-    def __init__(self, environment: str) -> None:
+    def __init__(self, environment: str, config_file: Optional[Path] = None) -> None:
         super().__init__(
             environment=environment,
-            config_file=PSENV_API_CONFIG_FILE,
+            config_file=config_file or PSENV_API_CONFIG_FILE,
             config_type=ApiConfig
         )
 
 
-class ParametersConfig(__BaseConfig):
+class ParametersConfig(_BaseConfig):
 
     @property
     def environments(self) -> Dict[str, Any]:
         return self._environments
 
 
-class ParametersConfigLoader(__BaseConfigLoader):
+class ParametersConfigLoader(_BaseConfigLoader):
 
-    def __init__(self, environment: str) -> None:
+    def __init__(self, environment: str, config_file: Optional[Path] = None) -> None:
         super().__init__(
             environment=environment,
-            config_file=PSENV_PARAMETERS_CONFIG_FILE,
+            config_file=config_file or PSENV_PARAMETERS_CONFIG_FILE,
             config_type=ParametersConfig
         )
 
