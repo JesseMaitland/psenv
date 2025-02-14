@@ -1,8 +1,8 @@
 psenv:
   project: myproject
   prefix: services/foo/bar
-  default: dev
   environments:
+    - base
     - dev
     - test
     - prod

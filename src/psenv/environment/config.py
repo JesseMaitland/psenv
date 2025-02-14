@@ -1,7 +1,8 @@
 import datetime
 import os
 from pathlib import Path
-
+from dotenv import load_dotenv
+load_dotenv()
 # used to load the api configs file
 PSENV_API_CONFIG_FILE = Path(os.getenv("PSENV_API_CONFIG_FILE", "psenv.yml"))
 PSENV_PARAMETERS_CONFIG_FILE = Path(os.getenv("PSENV_PARAMETERS_CONFIG_FILE", "psenv.yml"))
