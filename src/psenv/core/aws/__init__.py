@@ -1,3 +1,3 @@
-from .parameter_store_service import ParameterStoreService
+from .parameter_store_service import ParameterStoreService, Parameter
 
-__all__ = ["ParameterStoreService"]
+__all__ = ["ParameterStoreService", "Parameter"]
