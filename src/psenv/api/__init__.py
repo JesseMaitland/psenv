@@ -6,7 +6,7 @@ from psenv.core.configs import ApiConfig, ApiConfigLoader
 from psenv.core.aws import ParameterStoreService
 
 PSENV_PARAMETER_PATH = os.getenv("PSENV_PARAMETER_PATH")
-PSENV_API_CONFIG_PATH = Path(os.getenv("PSENV_API_CONFIG_PATH"))
+PSENV_API_CONFIG_PATH = Path(os.getenv("PSENV_API_CONFIG_PATH", Path.cwd() / "psenv.yml"))
 PSENV_API_ENVIRONMENT = os.getenv("PSENV_API_ENVIRONMENT")
 
 
@@ -22,8 +22,6 @@ class LoadPsEnv:
 
         if not self._ssm_path and not self._env:
             raise ValueError("Either environment or ssm path must be provided")
-
-        
 
 
     def __call__(self) -> None:

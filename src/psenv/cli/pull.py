@@ -27,8 +27,9 @@ class Pull(Command):
     def __call__(self) -> int:
         config = self.get_config()
         ssm_service = self.get_ssm_service(config)
+
         for parameter in ssm_service.parameters():
-            print(f"export {parameter.parameter_env_key}={parameter.value}")
+            print(parameter)
         return 0
 
     def get_config(self) -> ApiConfig:

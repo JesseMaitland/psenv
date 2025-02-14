@@ -36,8 +36,8 @@ class _BaseConfig(ABC):
     def prefix(self) -> str:
         return self._prefix
 
-    @abstractmethod
     @property
+    @abstractmethod
     def environments(self) -> Any:
         pass
 

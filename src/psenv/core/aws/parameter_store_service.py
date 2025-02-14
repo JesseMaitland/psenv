@@ -11,6 +11,10 @@ class Parameter:
     value: str
     version: int
     kind: str
+    project: str
+    prefix: str
+    environment: str
+    env_key: str
 
     @classmethod
     def from_boto3_response(cls, response: Dict[str, Any]) -> "Parameter":
@@ -18,15 +22,24 @@ class Parameter:
             name=response["Name"],
             value=response["Value"],
             version=response["Version"],
-            kind=response["Type"]
+            kind=response["Type"],
+            **cls.parse_name_parts(response["Name"])
         )
 
-    @property
-    def parameter_env_key(self) -> str:
-        return self.name.split("/")[-1].upper()
+    @staticmethod
+    def parse_name_parts(name: str) -> Dict[str, str]:
+        parts = name.split("/")
+        return {
+            "env_key": parts[-1].upper(),
+            "environment": parts[-2],
+            "project": parts[-3],
+            "prefix": "/".join(parts[:-3]),
+        }
 
     def as_dict(self) -> Dict[str, str]:
-        return {self.parameter_env_key: self.value}
+        return {self.env_key: self.value}
+
+
 
 class ParameterStoreService:
 

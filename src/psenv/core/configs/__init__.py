@@ -28,6 +28,12 @@ class ParametersConfig(_BaseConfig):
         return self._environments
 
 
+    @classmethod
+    def from_parameters(cls, params: Dict[str, str]) -> "ParametersConfig":
+        pass
+
+
+
 class ParametersConfigLoader(_BaseConfigLoader):
 
     def __init__(self, environment: str, config_file: Optional[Path] = None) -> None:
