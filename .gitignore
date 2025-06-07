@@ -57,3 +57,5 @@ coverage.xml
 *.egg-info
 venv
 .pytest_cache
+psenv.yml
+parameters.yml

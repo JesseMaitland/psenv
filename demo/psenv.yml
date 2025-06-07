@@ -1,4 +1,5 @@
 psenv:
+  kms_key: e24f3bb8-9ef4-455a-8cad-b40d80988f67
   project: myproject
   prefix: services/foo/bar
   environments:

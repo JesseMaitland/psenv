@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # used to load the api configs file
 PSENV_API_CONFIG_FILE = Path(os.getenv("PSENV_API_CONFIG_FILE", "psenv.yml"))
-PSENV_PARAMETERS_CONFIG_FILE = Path(os.getenv("PSENV_PARAMETERS_CONFIG_FILE", "psenv.yml"))
+PSENV_PARAMETERS_CONFIG_FILE = Path(os.getenv("PSENV_PARAMETERS_CONFIG_FILE", "parameters.yml"))
 PSENV_DEFAULT_ENVIRONMENT = os.getenv("PSENV_DEFAULT_ENVIRONMENT")
 
 PSENV_NOW = str(datetime.datetime.now())

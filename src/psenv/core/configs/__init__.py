@@ -11,6 +11,14 @@ from psenv.core.configs.bases import _BaseConfig, _BaseConfigLoader
 
 class ApiConfig(_BaseConfig):
 
+    def __init__(self, kms_key: str, **kwargs) -> None:
+        super().__init__(**kwargs)
+        self._kms_key = kms_key
+
+    @property
+    def kms_key(self) -> str:
+        return self._kms_key
+
     @property
     def environments(self) -> List[str]:
         return self._environments
